@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,8 +15,10 @@ public class Main {
         for (Class clazz : classes) {
             if (Deletable.class.isAssignableFrom(clazz)
                     && !Modifier.isInterface(clazz.getModifiers())) {
-                Deletable deletable = (Deletable) clazz.getConstructor().newInstance();
-                deletable.delete("s3d4");
+//                Deletable deletable = (Deletable) clazz.getConstructor().newInstance();
+//                deletable.delete("s3d4");
+                Method deleteMethod = clazz.getDeclaredMethod("delete", String.class);
+                deleteMethod.invoke(clazz.getConstructor().newInstance(), "s4d4");
             }
         }
     }
